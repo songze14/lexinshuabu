@@ -18,7 +18,7 @@ namespace weixinshuabu.Controllers
     public class weixinshuabuController : Controller
     {
         //服务器数据库设置
-        static SqlConnection connection = new SqlConnection("data source=1;database=data_core;user id=sa;password=");
+        static SqlConnection connection = new SqlConnection("data source=172_17_0_16;database=data_core;user id=sa;password=Szl15726");
         public static Thread WorkThread = new Thread(Work_thread);
         static IList<time_plan> All_time_plan = new List<time_plan>();
 
