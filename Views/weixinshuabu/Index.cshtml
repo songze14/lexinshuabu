@@ -1,0 +1,83 @@
+﻿<title>QQ微信支付宝刷步数</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/login.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/js_click.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="login-form">
+            <div class="text" >一键刷步</div>
+            <div class="form-item" id="shuabu">
+                <input id="userid" type="text" name="mobile" placeholder="手机号">
+                <input id="userpass" type="text" name="psw" placeholder="密码">
+                <input id="minstep" type="text" name="step" placeholder="最小步数">
+                <input id="maxstep" type="text" name="step" placeholder="最大步数">
+                <input id="time" type="time" />
+            </div>
+                <button onclick="upstep()" id="uo_step" class="btn">提交步数 </button>
+            <div class="other">
+                1.下载<a href="http://www.lifesense.com/app/">乐心健康APP</a>。 <br />
+                2.从应用商店下载乐心健康App，打开软件并选择手机号登录</br>
+                3.登录之后，点击我的->设置->账号与安全->设置密码(修改密码)，设置你自己记得住的密码 <br />
+                4.回到App首页，点击我的->数据共享，绑定你想同步数据的项目注：同步微信运动请按照要求关注【乐心运动】公众号。 <br />
+                5.回到提交网页版，登陆，提交步数即可同步至你绑定的所有平台
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    function upstep() {
+        var userid = $('#userid').val()
+        var userpass = $('#userpass').val()
+        var minstep = $('#minstep').val()
+        var maxstep = $('#maxstep').val()
+        var time = $('#time').val()
+        if (userid=="") {
+            alert("用户名为空")
+            return
+        }
+        if (userpass=="") {
+            alert("密码为空")
+            return
+        }
+        if (minstep=="") {
+            alert("最小步数为空")
+            return
+        }
+        if (maxstep=="") {
+            alert("最大步数为空")
+            return
+        }
+        if (time=="") {
+            alert("刷新时间为空")
+            return
+        }
+        if (minstep > maxstep) {
+            alert("最小步数不能大于最大步数")
+            return
+        }
+        $.ajax({
+            url: "/weixinshuabu/Send_timeplan_thread",
+            type: "post",
+            data: { 'usrname': userid, 'userpass': userpass, 'min_step': minstep, "max_step": maxstep, "time": time },
+            success: function (data) {
+                console.log(data)
+                var msg = data.msg
+                alert(msg);  
+            }
+        })
+        
+                
+    }
+
+</script>
